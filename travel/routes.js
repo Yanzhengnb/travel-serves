@@ -28,11 +28,11 @@ function TravelRoutes(app) {
     res.json(status);
   };
 
-  app.post("/api/travels", createTravel);
-  app.get("/api/travels", findAllTravels);
-  app.get("/api/travels/:id", findTravelById);
-  app.put("/api/travels/:id", updateTravel);
-  app.delete("/api/travels/:id", deleteTravel);
+  app.post("/travels", createTravel);
+  app.get("/travels", findAllTravels);
+  app.get("/travels/:id", findTravelById);
+  app.put("/travels/:id", updateTravel);
+  app.delete("/travels/:id", deleteTravel);
 }
 
 export default TravelRoutes;
