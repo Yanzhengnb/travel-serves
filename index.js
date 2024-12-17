@@ -43,4 +43,21 @@ app.use(session(sessionOptions));
 
 TravelRoutes(app);
 ExpenseRoutes(app);
+// 添加测试路由
+app.get("/test", async (req, res) => {
+    try {
+        // 尝试获取一些数据
+        const travels = await mongoose.connection.db.collection("travels").find().limit(1).toArray();
+        res.json({
+            status: "success",
+            message: "Connected to MongoDB",
+            data: travels
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+    }
+});
 app.listen(process.env.PORT || 4000)
