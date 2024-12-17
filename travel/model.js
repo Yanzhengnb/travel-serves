@@ -11,7 +11,12 @@ const travelSchema = new mongoose.Schema({
   activities: [String],
   url: String, 
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "UserModel" },
-  address: { type: String }
+  address: { type: String },
+  tags: {
+    type: [String],
+    enum: ['吃喝', '玩乐', '住宿', '交通'],
+    default: []
+  }
 }, { timestamps: true });
 
 const TravelModel = mongoose.model("Travel", travelSchema);
