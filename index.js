@@ -46,18 +46,24 @@ ExpenseRoutes(app);
 // 添加测试路由
 app.get("/test", async (req, res) => {
     try {
-        // 尝试获取一些数据
-        const travels = await mongoose.connection.db.collection("travels").find().limit(1).toArray();
+        const collections = await mongoose.connection.db.listCollections().toArray();
+        const data = {};
+        
+        // 获取每个集合的数据
+        for (let collection of collections) {
+            const collectionData = await mongoose.connection.db
+                .collection(collection.name)
+                .find()
+                .toArray();
+            data[collection.name] = collectionData;
+        }
+        
         res.json({
-            status: "success",
-            message: "Connected to MongoDB",
-            data: travels
+            collections: collections.map(c => c.name),
+            data: data
         });
     } catch (error) {
-        res.status(500).json({
-            status: "error",
-            message: error.message
-        });
+        res.status(500).json({ error: error.message });
     }
 });
 app.listen(process.env.PORT || 4000)
